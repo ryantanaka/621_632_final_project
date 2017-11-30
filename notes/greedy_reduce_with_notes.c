@@ -70,7 +70,7 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
 
     for(i = qstart; i >= qend; i--) { // for the segments we are currently working on
       z = (i == 0) ? hist[0]/2 : (hist[i]-hist[i-1])/2;
-      s3 = ( i == q-1 ) ? s2 : s;
+      s3 = ( i == q-1 ) ? s2 : s; // s3 will be the segment size you send (s for regular or s2 for the remainder segment)
 
       if( my_rank < hist[i] && my_rank >= hist[i] - z ) {
         MPI_Send(tempbuf, s3, mpi_datatype, my_rank-z, 512, mpi_comm );
