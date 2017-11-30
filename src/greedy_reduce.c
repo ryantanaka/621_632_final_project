@@ -1,6 +1,6 @@
 #include <mpi.h>
 
-int global_s = 500000;
+int global_s = NUM_INTS/5;
 
 int Reduce_greedy( void *sendbuf_notype, void *recvbuf_notype, int m,
 MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
