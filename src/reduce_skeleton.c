@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <mpi.h>
 
-#define NUM_INTS 10000000
+#define NUM_INTS 1000000
 
 int Reduce_greedy( void *, void *, int, MPI_Datatype, MPI_Op, int, MPI_Comm);
 int Reduce_binomial( void *, void *, int, MPI_Datatype, MPI_Op, int, MPI_Comm);
@@ -30,9 +30,9 @@ int main(int argc, char **argv) {
     start_time = MPI_Wtime();
   }
 
-  MPI_Reduce(local_sum, global_sum, NUM_INTS, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
+  //MPI_Reduce(local_sum, global_sum, NUM_INTS, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
   //Reduce_binomial(local_sum, global_sum, NUM_INTS, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
-  //Reduce_greedy(local_sum, global_sum, NUM_INTS, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
+  Reduce_greedy(local_sum, global_sum, NUM_INTS, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
 
   // End timer and print result
   MPI_Barrier (MPI_COMM_WORLD);
