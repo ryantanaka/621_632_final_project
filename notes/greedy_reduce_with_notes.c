@@ -1,7 +1,7 @@
 #include <mpi.h>
 
 // segment size
-int global_s = 100000;
+int global_s = 50000;
 
 int Reduce_greedy( void *sendbuf_notype, void *recvbuf_notype, int m,
 MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
