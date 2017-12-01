@@ -31,7 +31,9 @@ NUM_INTS=$2
 smpicc -O3 -DNUM_INTS=$NUM_INTS reduce_skeleton.c greedy_reduce.c binomial_reduce.c -o reduce -lm \
 && \
 smpirun --cfg=smpi/reduce:binomial \
+  --cfg=smpi/host-speed:10000000000 \
   -np $NP \
   -hostfile $HOSTFILE \
   -platform $PLATFORM \
-  ./reduce $REDUCE_TYPE
+  ./reduce $REDUCE_TYPE \
+  2> /dev/null
