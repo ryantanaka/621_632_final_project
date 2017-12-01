@@ -10,12 +10,12 @@ XML platform file may not be suitable for running other
 simulations, unless you remove the <config></config> clause.
 -->
 
-
+<!--
 <config>
 <prop id="smpi/simulate-computation" value="0"></prop>
 <prop id="smpi/running-power" value="1"></prop>
 </config>
-
+-->
 
 <zone id="AS0" routing="Full">
 <cluster id="cluster" prefix="host-" suffix=".hawaii.edu" radical="0-63" speed="10Gf" bw="10Gbps" lat="20us"/>
