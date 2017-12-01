@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
     local_sum[k] = 1;
   }
 
-  MPI_Init(&argc,&argv);  
+  MPI_Init(&argc,&argv);
   MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
   MPI_Comm_size(MPI_COMM_WORLD, &num_procs);
 
@@ -42,7 +42,7 @@ int main(int argc, char **argv) {
   // End timer and print result
   MPI_Barrier (MPI_COMM_WORLD);
   if (my_rank == 0) {
-    printf("%s | NUM_INTS: %d | %.3lf seconds\n", reduce_implementation_name, NUM_INTS, MPI_Wtime() - start_time);
+    printf("%s | NUM_INTS: %d | %.10lf seconds\n", reduce_implementation_name, NUM_INTS, MPI_Wtime() - start_time);
 
     /*
     for (int j = 0; j < NUM_INTS; j++) {
