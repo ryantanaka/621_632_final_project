@@ -1,0 +1,22 @@
+RUNNING IMPLEMENTATION: S
+smpi_binomial_reduce | NUM_INTS:          16 | 0.0005603641 seconds
+smpi_binomial_reduce | NUM_INTS:          32 | 0.0005595934 seconds
+smpi_binomial_reduce | NUM_INTS:          64 | 0.0005686359 seconds
+smpi_binomial_reduce | NUM_INTS:         128 | 0.0005526940 seconds
+smpi_binomial_reduce | NUM_INTS:         256 | 0.0005590335 seconds
+smpi_binomial_reduce | NUM_INTS:         512 | 0.0004808835 seconds
+smpi_binomial_reduce | NUM_INTS:        1024 | 0.0005542585 seconds
+smpi_binomial_reduce | NUM_INTS:        2048 | 0.0006428060 seconds
+smpi_binomial_reduce | NUM_INTS:        4096 | 0.0010253170 seconds
+smpi_binomial_reduce | NUM_INTS:        8192 | 0.0011411860 seconds
+smpi_binomial_reduce | NUM_INTS:       16384 | 0.0032051490 seconds
+smpi_binomial_reduce | NUM_INTS:       32768 | 0.0035424150 seconds
+smpi_binomial_reduce | NUM_INTS:       65536 | 0.0042115541 seconds
+smpi_binomial_reduce | NUM_INTS:      131072 | 0.0055501052 seconds
+smpi_binomial_reduce | NUM_INTS:      262144 | 0.0082231764 seconds
+smpi_binomial_reduce | NUM_INTS:      524288 | 0.0135768388 seconds
+smpi_binomial_reduce | NUM_INTS:     1048576 | 0.0242753876 seconds
+smpi_binomial_reduce | NUM_INTS:     2097152 | 0.0456798181 seconds
+smpi_binomial_reduce | NUM_INTS:     4194304 | 0.0884853922 seconds
+smpi_binomial_reduce | NUM_INTS:     8388608 | 0.1740987665 seconds
+smpi_binomial_reduce | NUM_INTS:    16777216 | 0.3453168220 seconds
