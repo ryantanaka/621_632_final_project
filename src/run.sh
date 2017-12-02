@@ -8,6 +8,7 @@ NP=64
 # Reduce Implementation
 S="smpi_binomial_reduce"
 B="binomial_reduce"
+P="pipeline_reduce"
 G="greedy_reduce"
 
 VAR=$1
@@ -28,7 +29,7 @@ REDUCE_TYPE=${!VAR}
 NUM_INTS=$2
 
 # Compile and Run
-smpicc -O3 -DNUM_INTS=$NUM_INTS reduce_skeleton.c greedy_reduce.c binomial_reduce.c -o reduce -lm \
+smpicc -O3 -DNUM_INTS=$NUM_INTS reduce_skeleton.c greedy_reduce.c my_reduce_implementations.c -o reduce -lm \
 && \
 smpirun --cfg=smpi/reduce:binomial \
   --cfg=smpi/host-speed:10000000000 \
@@ -36,4 +37,4 @@ smpirun --cfg=smpi/reduce:binomial \
   -hostfile $HOSTFILE \
   -platform $PLATFORM \
   ./reduce $REDUCE_TYPE \
-  2> /dev/null
+  /dev/null
