@@ -46,12 +46,14 @@ int main(int argc, char **argv) {
   // End timer and print result
   MPI_Barrier (MPI_COMM_WORLD);
   if (my_rank == 0) {
-    printf("%s | NUM_INTS: %d | %.10lf seconds\n", reduce_implementation_name, NUM_INTS, MPI_Wtime() - start_time);
+    printf("%s | NUM_INTS: %11d | %.10lf\n", reduce_implementation_name, NUM_INTS, MPI_Wtime() - start_time);
 
+    /*
     for (int j = 0; j < NUM_INTS; j++) {
       printf("%d ", global_sum[j]);
     }
     printf("\n");
+    */
   }
 
   MPI_Finalize();
