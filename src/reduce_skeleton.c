@@ -4,7 +4,7 @@
 
 int Reduce_greedy( void *, void *, int, MPI_Datatype, MPI_Op, int, MPI_Comm);
 int Reduce_binomial( void *, void *, int, MPI_Datatype, MPI_Op, int, MPI_Comm);
-int Reduce_pipeline( void *, void *, int, int, MPI_Datatype, MPI_Op, int, MPI_Comm);
+int Reduce_pipeline( void *, void *, int, MPI_Datatype, MPI_Op, int, MPI_Comm);
 
 int main(int argc, char **argv) {
   int i, my_rank, num_procs;
@@ -37,7 +37,7 @@ int main(int argc, char **argv) {
     Reduce_binomial(local_sum, global_sum, NUM_INTS, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
   }
   else if (strcmp(reduce_implementation_name, "pipeline_reduce") == 0) {
-    Reduce_pipeline(local_sum, global_sum, 2, NUM_INTS, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
+    Reduce_pipeline(local_sum, global_sum, NUM_INTS, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
   }
   else if (strcmp(reduce_implementation_name, "greedy_reduce") == 0){
     Reduce_greedy(local_sum, global_sum, NUM_INTS, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
