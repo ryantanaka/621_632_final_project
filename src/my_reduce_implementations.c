@@ -55,11 +55,12 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
 }
 
 // segment size s must be (1 <= s <= m)
-int Reduce_pipeline(void *sendbuf_notype, void* recvbuf_notype, int s, int m,
+int Reduce_pipeline(void *sendbuf_notype, void* recvbuf_notype, int m,
 MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
   int my_rank, num_ranks;
   int i, j;
   int s2, s3, snext, q;
+  int s = m/16;
   int send_to, receive_from, start_rank;
   MPI_Status status;
 
@@ -98,9 +99,11 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
   }
 
   // DEBUGGING
+  /*
   if (my_rank == root) {
     printf("segment size s = %d, segment size 2 s2 = %d, num chunks q = %d\n", s, s2, q);
   }
+  */
 
   // im only sending chunks
   if (my_rank == start_rank) {
