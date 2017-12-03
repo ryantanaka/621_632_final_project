@@ -1,0 +1,23 @@
+RUNNING IMPLEMENTATION: P
+pipeline_reduce | NUM_INTS:          16 | 0.0053981081
+pipeline_reduce | NUM_INTS:          32 | 0.0053997504
+pipeline_reduce | NUM_INTS:          64 | 0.0054007179
+pipeline_reduce | NUM_INTS:         128 | 0.0054065211
+pipeline_reduce | NUM_INTS:         256 | 0.0054152424
+pipeline_reduce | NUM_INTS:         512 | 0.0053278660
+pipeline_reduce | NUM_INTS:        1024 | 0.0053903892
+pipeline_reduce | NUM_INTS:        2048 | 0.0045087262
+pipeline_reduce | NUM_INTS:        4096 | 0.0053280361
+pipeline_reduce | NUM_INTS:        8192 | 0.0063684876
+pipeline_reduce | NUM_INTS:       16384 | 0.0106894777
+pipeline_reduce | NUM_INTS:       32768 | 0.0121074965
+pipeline_reduce | NUM_INTS:       65536 | 0.0366374218
+pipeline_reduce | NUM_INTS:      131072 | 0.0408446226
+pipeline_reduce | NUM_INTS:      262144 | 0.0497330081
+pipeline_reduce | NUM_INTS:      524288 | 0.0675515982
+pipeline_reduce | NUM_INTS:     1048576 | 0.1024593115
+pipeline_reduce | NUM_INTS:     2097152 | 0.1739622150
+pipeline_reduce | NUM_INTS:     4194304 | 0.3189386079
+pipeline_reduce | NUM_INTS:     8388608 | 0.6053013589
+pipeline_reduce | NUM_INTS:    16777216 | 1.1860080098
+

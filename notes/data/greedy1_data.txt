@@ -1,0 +1,22 @@
+RUNNING IMPLEMENTATION: G
+greedy_reduce | NUM_INTS:          16 | 0.0005633131
+greedy_reduce | NUM_INTS:          32 | 0.0005686834
+greedy_reduce | NUM_INTS:          64 | 0.0005859439
+greedy_reduce | NUM_INTS:         128 | 0.0005577760
+greedy_reduce | NUM_INTS:         256 | 0.0005677255
+greedy_reduce | NUM_INTS:         512 | 0.0004845035
+greedy_reduce | NUM_INTS:        1024 | 0.0005669185
+greedy_reduce | NUM_INTS:        2048 | 0.0006546390
+greedy_reduce | NUM_INTS:        4096 | 0.0010465510
+greedy_reduce | NUM_INTS:        8192 | 0.0011793730
+greedy_reduce | NUM_INTS:       16384 | 0.0033021100
+greedy_reduce | NUM_INTS:       32768 | 0.0036850030
+greedy_reduce | NUM_INTS:       65536 | 0.0046912094
+greedy_reduce | NUM_INTS:      131072 | 0.0069749158
+greedy_reduce | NUM_INTS:      262144 | 0.0096994714
+greedy_reduce | NUM_INTS:      524288 | 0.0159949548
+greedy_reduce | NUM_INTS:     1048576 | 0.0295429226
+greedy_reduce | NUM_INTS:     2097152 | 0.0566871641
+greedy_reduce | NUM_INTS:     4194304 | 0.1083654892
+greedy_reduce | NUM_INTS:     8388608 | 0.2161061325
+greedy_reduce | NUM_INTS:    16777216 | 0.7195433590
