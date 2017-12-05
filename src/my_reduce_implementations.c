@@ -147,3 +147,69 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
 
   free(tempbuf);
 }
+
+int Reduce_binary(void *sendbuf_notype, void* recvbuf_notype, int m,
+MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
+  int my_rank, num_ranks;
+  int i,j;
+  int s2, s3, snext, q;
+  int s = m/2;
+  int send_to, receive_from;
+  int left_child, right_child, parent, is_leaf;
+  int *tree_layout;
+  int my_tree_level, my_tree_index, tree_height;
+  int start, bound;
+  MPI_Status status;
+  MPI_Request request1 = MPI_REQUEST_NULL;
+
+  MPI_Comm_rank(mpi_comm, &my_rank);
+  MPI_Comm_size(mpi_comm, &num_ranks);
+
+  // START computing node info
+
+  // build level order tree based on whatever the root is (root will be at index 0)
+  tree_layout = (int *)malloc(num_ranks * sizeof(int));
+  for (i = 0; i < num_ranks; i++) {
+    tree_layout[i] = (i + root) % num_ranks;
+    if (tree_layout[i] == my_rank) {
+      my_tree_index = i;
+    }
+  }
+
+  // figure out what level of the tree I'm on
+  start = 0;
+  tree_height = (int)ceil(log2(num_ranks));
+  for (i = 0; i <= tree_height) {
+    bound = start + (int)pow(2, i);
+    for (j = start, j < bound; j++) {
+      if (j < num_ranks) {
+        if(tree_layout[j] == my_tree_index) {
+          my_tree_level = i;
+        }
+      }
+    }
+    start = bound;
+  }
+
+  // figure out parent and children
+  parent = (int)ceil((double)my_tree_index / (double)2) - 1;
+  left_child = 2*my_tree_index + 1;
+  right_child = 2*my_tree_index + 2;
+
+  if (left_child >= num_ranks) {
+    left_child = 0;
+  }
+
+  if (right_child >= num_ranks) {
+    right_child = 0;
+  }
+
+  if (left_child == 0 && right_child == 0) {
+    is_leaf = 1;
+  }
+  else {
+    is_leaf = 0;
+  }
+
+  // END computing node info
+}
