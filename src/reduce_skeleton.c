@@ -39,6 +39,9 @@ int main(int argc, char **argv) {
   else if (strcmp(reduce_implementation_name, "pipeline_reduce") == 0) {
     Reduce_pipeline(local_sum, global_sum, NUM_INTS, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
   }
+  else if (strcmp(reduce_implementation_name, "binary_pipeline_reduce") == 0) {
+    Reduce_binary(local_sum, global_sum, NUM_INTS, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
+  }
   else if (strcmp(reduce_implementation_name, "greedy_reduce") == 0){
     Reduce_greedy(local_sum, global_sum, NUM_INTS, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
   }
