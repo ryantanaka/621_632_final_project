@@ -211,5 +211,6 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
     is_leaf = 0;
   }
 
+  free(tree_layout);
   // END computing node info
 }
