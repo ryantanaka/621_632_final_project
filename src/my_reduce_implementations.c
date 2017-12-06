@@ -176,6 +176,7 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
     }
   }
 
+  // **** actually DON'T need this section... internal nodes always will receive from left child then right child
   // figure out what level of the tree I'm on
   start = 0;
   tree_height = (int)ceil(log2(num_ranks));
