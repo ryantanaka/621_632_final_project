@@ -1,10 +1,12 @@
 from math import ceil,log2
 
 num_procs = 8
-root = 0 
+root = 1 
 start = 0
 my_flat_circle = [(k + root) % num_procs for k in range(num_procs)]
+print(my_flat_circle)
 
+'''
 # use this algorithm to tell each process what level they are on
 print("printing each processes's level....")
 for i in range(ceil(log2(num_procs)) + 1):
@@ -17,6 +19,7 @@ for i in range(ceil(log2(num_procs)) + 1):
             break
 
     start = bound
+'''
 
 '''
 print("")
