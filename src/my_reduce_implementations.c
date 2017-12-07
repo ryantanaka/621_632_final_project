@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 // Num_ranks must be power of 2!
+// ROOT must be 0
 int Reduce_binomial(void *sendbuf_notype, void* recvbuf_notype, int m,
 MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
   int my_rank, num_ranks, num_phases, i, k;
@@ -55,12 +56,13 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
 }
 
 // segment size s must be (1 <= s <= m)
+// root can be any node
 int Reduce_pipeline(void *sendbuf_notype, void* recvbuf_notype, int m,
 MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
   int my_rank, num_ranks;
   int i, j;
   int s2, s3, snext, q;
-  int s = m/2;
+  int s = m/2; // EDIT to change segment size
   int send_to, receive_from, start_rank;
   MPI_Status status;
 
@@ -101,14 +103,7 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
     s2 = s;
   }
 
-  // DEBUGGING
-  /*
-  if (my_rank == root) {
-    printf("segment size s = %d, segment size 2 s2 = %d, num chunks q = %d\n", s, s2, q);
-  }
-  */
-
-  // im only sending chunks
+  // TAIL END of pipeline so only sending
   if (my_rank == start_rank) {
     for (i = 0; i < q; i++) {
       s3 = (i == q - 1) ? s2 : s;
@@ -122,6 +117,7 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
       }
     }
   }
+  // IN BETWEEN NODES so receiving then sending
   else if (my_rank != start_rank && my_rank != root) {
     for (i = 0; i < q; i++) {
       s3 = (i == q - 1) ? s2 : s;
@@ -130,13 +126,7 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
       for (j = 0; j < s3; j++) {
         tempbuf[j] += tempbuf2[j];
       }
-      /* FOR DEBUGGING
-      if(my_rank == 1) {
-        for(j=0; j<m; j++) {
-          printf(" %d", tempbuf[j]);
-        }
-      }
-      */
+
       MPI_Send(tempbuf, s3, mpi_datatype, send_to, 0, mpi_comm);
       if (i < q - 1) { //get the next chunk ready to send if there are chunks left to send
         snext = (i == q - 2) ? s2 : s;
@@ -146,6 +136,7 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
       }
     }
   }
+  // ROOT NODE so only receiving
   else {
     for (i = 0; i < q; i++) {
       s3 = (i == q - 1) ? s2 : s;
@@ -168,7 +159,7 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
   int my_rank, num_ranks;
   int i,j;
   int s2, s3, snext, q;
-  int s = m/16;
+  int s = m/16; // EDIT to change segment size
   int send_to, receive_from;
   int left_child, right_child, parent, is_leaf;
   int *tree_layout;
@@ -199,7 +190,9 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
     }
   }
 
-  q = m/s; // q is the number of chunks
+  // determine segment size(s)
+  // s is segment size, s2 is remaining segment size
+  q = m/s;
   if ((m % s) != 0) {
     s2 = m % s;
     q++;
@@ -208,7 +201,7 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
     s2 = s;
   }
 
-  // START computing node info
+  // START COMPUTING NODE INFO
 
   // build level order tree based on whatever the root is (root will be at index 0)
   tree_layout = (int *)malloc(num_ranks * sizeof(int));
@@ -249,8 +242,9 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
   }
 
   free(tree_layout);
-  // END computing node info
+  // END COMPUTING NODE INFO
 
+  // ROOT NODE receceiving from left then right child
   if (my_rank == root) {
     for (i = 0; i < q; i++) {
       s3 = (i == q - 1) ? s2 : s;
@@ -268,6 +262,7 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
       }
     }
   }
+  // LEAF NODE so only sending data to parent
   else if (is_leaf) {
     for (i = 0; i < q; i++) {
       s3 = (i == q - 1) ? s2 : s;
@@ -281,6 +276,7 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
       }
     }
   }
+  // INTERNAL NODES excluding ROOT will Receive from left, then right, then send to parent
   else {
     for (i = 0; i < q; i++) {
       s3 = (i == q - 1) ? s2 : s;
