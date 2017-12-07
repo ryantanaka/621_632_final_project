@@ -1,0 +1,22 @@
+RUNNING IMPLEMENTATION: BP
+binary_pipeline_reduce | NUM_INTS:          16 | 0.0012227712
+binary_pipeline_reduce | NUM_INTS:          32 | 0.0012273530
+binary_pipeline_reduce | NUM_INTS:          64 | 0.0012188426
+binary_pipeline_reduce | NUM_INTS:         128 | 0.0012210019
+binary_pipeline_reduce | NUM_INTS:         256 | 0.0012041768
+binary_pipeline_reduce | NUM_INTS:         512 | 0.0012584844
+binary_pipeline_reduce | NUM_INTS:        1024 | 0.0010674257
+binary_pipeline_reduce | NUM_INTS:        2048 | 0.0012140788
+binary_pipeline_reduce | NUM_INTS:        4096 | 0.0014278244
+binary_pipeline_reduce | NUM_INTS:        8192 | 0.0022744728
+binary_pipeline_reduce | NUM_INTS:       16384 | 0.0025334746
+binary_pipeline_reduce | NUM_INTS:       32768 | 0.0078340464
+binary_pipeline_reduce | NUM_INTS:       65536 | 0.0090044018
+binary_pipeline_reduce | NUM_INTS:      131072 | 0.0111965796
+binary_pipeline_reduce | NUM_INTS:      262144 | 0.0157511611
+binary_pipeline_reduce | NUM_INTS:      524288 | 0.0213761932
+binary_pipeline_reduce | NUM_INTS:     1048576 | 0.0365249845
+binary_pipeline_reduce | NUM_INTS:     2097152 | 0.0661574400
+binary_pipeline_reduce | NUM_INTS:     4194304 | 0.1246169919
+binary_pipeline_reduce | NUM_INTS:     8388608 | 0.2441282159
+binary_pipeline_reduce | NUM_INTS:    16777216 | 0.5021146054
