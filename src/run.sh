@@ -38,4 +38,4 @@ smpirun --cfg=smpi/reduce:binomial \
   -hostfile $HOSTFILE \
   -platform $PLATFORM \
   ./reduce $REDUCE_TYPE \
-  #2> /dev/null
+  2> /dev/null
