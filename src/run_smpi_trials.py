@@ -1,6 +1,6 @@
 import subprocess
 
-implementation = "G"
+implementation = "BP"
 run_script = "./run.sh {} {}"
 
 print("RUNNING IMPLEMENTATION: {}".format(implementation))
