@@ -52,10 +52,12 @@ int main(int argc, char **argv) {
   if (my_rank == 2) {
     printf("%s | NUM_INTS: %11d | %.10lf\n", reduce_implementation_name, NUM_INTS, MPI_Wtime() - start_time);
 
+    /*
     for (int j = 0; j < NUM_INTS; j++) {
       printf("%d ", global_sum[j]);
     }
     printf("\n");
+    */
   }
 
   free(local_sum);
