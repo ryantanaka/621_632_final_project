@@ -11,8 +11,8 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
 
   int *sendbuf, *recvbuf, *tempbuf;
 
-  sendbuf = (int *) sendbuf_notype;
-  recvbuf = (int *) recvbuf_notype;
+  sendbuf = (int*) sendbuf_notype;
+  recvbuf = (int*) recvbuf_notype;
 
   MPI_Comm_rank(mpi_comm, &my_rank);
   MPI_Comm_size(mpi_comm, &num_ranks);
