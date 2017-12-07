@@ -66,8 +66,8 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
 
   int *sendbuf, *recvbuf, *tempbuf, *tempbuf2;
 
-  sendbuf = (int *) sendbuf_notype;
-  recvbuf = (int *) recvbuf_notype;
+  sendbuf = (int*)sendbuf_notype;
+  recvbuf = (int*)recvbuf_notype;
 
   MPI_Comm_rank(mpi_comm, &my_rank);
   MPI_Comm_size(mpi_comm, &num_ranks);
@@ -76,7 +76,7 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
   receive_from = (my_rank + num_ranks + 1) % num_ranks;
   start_rank = (root + num_ranks - 1) % num_ranks;
 
-  if(my_rank != root) {
+  if (my_rank != root) {
     tempbuf = (int*)malloc(s*sizeof(int));
   }
   tempbuf2 = (int*)malloc(s*sizeof(int));
@@ -87,7 +87,7 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
     }
   }
   else {
-    for(i = 0; i < s; i++) {
+    for (i = 0; i < s; i++) {
       tempbuf[i] = sendbuf[i];
     }
   }
@@ -110,20 +110,20 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
 
   // im only sending chunks
   if (my_rank == start_rank) {
-    for(i = 0; i < q; i++) {
+    for (i = 0; i < q; i++) {
       s3 = (i == q - 1) ? s2 : s;
 
       MPI_Send(tempbuf, s3, mpi_datatype, send_to, 0, mpi_comm);
       if (i < q - 1) { //get the next chunk ready to send if there are chunks left to send
         snext = (i == q - 2) ? s2 : s;
-        for(j = 0; j < snext; j++) {
+        for (j = 0; j < snext; j++) {
           tempbuf[j] = sendbuf[(i + 1) * s + j];
         }
       }
     }
   }
   else if (my_rank != start_rank && my_rank != root) {
-    for(i = 0; i < q; i++) {
+    for (i = 0; i < q; i++) {
       s3 = (i == q - 1) ? s2 : s;
 
       MPI_Recv(tempbuf2, s3, mpi_datatype, receive_from, 0, mpi_comm, &status);
@@ -140,18 +140,18 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
       MPI_Send(tempbuf, s3, mpi_datatype, send_to, 0, mpi_comm);
       if (i < q - 1) { //get the next chunk ready to send if there are chunks left to send
         snext = (i == q - 2) ? s2 : s;
-        for(j = 0; j < snext; j++) {
+        for (j = 0; j < snext; j++) {
           tempbuf[j] = sendbuf[(i + 1) * s + j];
         }
       }
     }
   }
   else {
-    for(i = 0; i < q; i++) {
+    for (i = 0; i < q; i++) {
       s3 = (i == q - 1) ? s2 : s;
 
       MPI_Recv(tempbuf2, s3, mpi_datatype, receive_from, 0 , mpi_comm, &status);
-      for(j = 0; j < s3; j++) {
+      for (j = 0; j < s3; j++) {
         recvbuf[i*s + j] += tempbuf2[j];
       }
     }
@@ -168,7 +168,7 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
   int my_rank, num_ranks;
   int i,j;
   int s2, s3, snext, q;
-  int s = m/2;
+  int s = m/16;
   int send_to, receive_from;
   int left_child, right_child, parent, is_leaf;
   int *tree_layout;
@@ -177,8 +177,8 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
   MPI_Status status;
   MPI_Request request1 = MPI_REQUEST_NULL;
 
-  sendbuf = (int *) sendbuf_notype;
-  recvbuf = (int *) recvbuf_notype;
+  sendbuf = (int*)sendbuf_notype;
+  recvbuf = (int*)recvbuf_notype;
 
   MPI_Comm_rank(mpi_comm, &my_rank);
   MPI_Comm_size(mpi_comm, &num_ranks);
@@ -194,7 +194,7 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
     }
   }
   else {
-    for(i = 0; i < s; i++) {
+    for (i = 0; i < s; i++) {
       tempbuf[i] = sendbuf[i];
     }
   }
@@ -252,47 +252,47 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
   // END computing node info
 
   if (my_rank == root) {
-    for(i = 0; i < q; i++) {
+    for (i = 0; i < q; i++) {
       s3 = (i == q - 1) ? s2 : s;
 
       MPI_Recv(tempbuf2, s3, mpi_datatype, left_child, 0 , mpi_comm, &status);
-      for(j = 0; j < s3; j++) {
+      for (j = 0; j < s3; j++) {
         recvbuf[i * s + j] += tempbuf2[j];
       }
 
-      if(right_child != -1) {
+      if (right_child != -1) {
         MPI_Recv(tempbuf2, s3, mpi_datatype, right_child, 0 , mpi_comm, &status);
-        for(j = 0; j < s3; j++) {
+        for (j = 0; j < s3; j++) {
           recvbuf[i * s + j] += tempbuf2[j];
         }
       }
     }
   }
-  else if(is_leaf) {
-    for(i = 0; i < q; i++) {
+  else if (is_leaf) {
+    for (i = 0; i < q; i++) {
       s3 = (i == q - 1) ? s2 : s;
 
       MPI_Send(tempbuf, s3, mpi_datatype, parent, 0, mpi_comm);
       if (i < q - 1) { //get the next chunk ready to send if there are chunks left to send
         snext = (i == q - 2) ? s2 : s;
-        for(j = 0; j < snext; j++) {
+        for (j = 0; j < snext; j++) {
           tempbuf[j] = sendbuf[(i + 1) * s + j];
         }
       }
     }
   }
   else {
-    for(i = 0; i < q; i++) {
+    for (i = 0; i < q; i++) {
       s3 = (i == q - 1) ? s2 : s;
 
       MPI_Recv(tempbuf2, s3, mpi_datatype, left_child, 0 , mpi_comm, &status);
-      for(j = 0; j < s3; j++) {
+      for (j = 0; j < s3; j++) {
         tempbuf[j] += tempbuf2[j];
       }
 
-      if(right_child != -1) {
+      if (right_child != -1) {
         MPI_Recv(tempbuf2, s3, mpi_datatype, right_child, 0 , mpi_comm, &status);
-        for(j = 0; j < s3; j++) {
+        for (j = 0; j < s3; j++) {
           tempbuf[j] += tempbuf2[j];
         }
       }
@@ -300,14 +300,14 @@ MPI_Datatype mpi_datatype, MPI_Op mpi_op, int root, MPI_Comm mpi_comm) {
       MPI_Send(tempbuf, s3, mpi_datatype, parent, 0, mpi_comm);
       if (i < q - 1) { //get the next chunk ready to send if there are chunks left to send
         snext = (i == q - 2) ? s2 : s;
-        for(j = 0; j < snext; j++) {
+        for (j = 0; j < snext; j++) {
           tempbuf[j] = sendbuf[(i + 1) * s + j];
         }
       }
     }
   }
 
-  if(my_rank != root) {
+  if (my_rank != root) {
     free(tempbuf);
   }
   free(tempbuf2);
